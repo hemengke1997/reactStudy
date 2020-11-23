@@ -1,0 +1,22 @@
+.containerWrapper {
+  display: flex;
+  flex-direction: column;
+
+  .container {
+    display: flex;
+    height: calc(100% - 64px);
+    .leftArea {
+      width: 350px;
+      height: 100%;
+      padding: 10px 0 10px 10px;
+      display: inline-block;
+      background-color: #fff;
+      transition: width ease-in-out 0.5s;
+      position: fixed;
+      z-index: 200;
+      &.collapsed {
+        width: 50px;
+      }
+    }
+  }
+}
