@@ -1,0 +1,47 @@
+.homeContainer {
+  display: flex;
+  height: 100%;
+
+  .leftArea {
+    padding: 10px 0 10px 20px;
+    border-right: 1px solid #f0f0f0;
+  }
+
+  .rightArea {
+    flex: 1;
+
+    .operation {
+      margin-top: 30px;
+      text-align: center;
+
+      .card {
+        display: inline-flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        width: 220px;
+        height: 220px;
+        border-radius: 6px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0);
+        font-size: 56px;
+        border: 1px solid #f0f0f0;
+        margin-right: 30px;
+        cursor: pointer;
+        color: @primary-color;
+
+        &:hover {
+          box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        div {
+          margin-top: 10px;
+          font-size: 20px;
+        }
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}
