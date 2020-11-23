@@ -1,7 +1,7 @@
 /*
  * @Author: hemengke
  * @Date: 2020-11-23 09:48:46
- * @LastEditTime: 2020-11-23 14:58:12
+ * @LastEditTime: 2020-11-23 20:31:13
  * @LastEditors: hemengke
  * @Description: 暂无描述
  */
@@ -43,7 +43,7 @@ export default defineConfig({
   ],
   base: '/',
   hash: false,
-  title: 'hemengke',
+  title: '贺梦柯',
   history: {
     type: 'browser'
   },

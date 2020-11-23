@@ -1,0 +1,1 @@
+export type componentsType = 'media' || 'base' || 'visible';
