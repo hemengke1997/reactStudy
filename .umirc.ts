@@ -1,7 +1,7 @@
 /*
  * @Author: hemengke
  * @Date: 2020-11-23 09:48:46
- * @LastEditTime: 2020-11-23 20:31:13
+ * @LastEditTime: 2020-11-24 09:32:04
  * @LastEditors: hemengke
  * @Description: 暂无描述
  */
@@ -53,6 +53,7 @@ export default defineConfig({
     assets: path.resolve(__dirname, 'src/assets')
   },
   theme: {
-    "primary-color": "#2F54EB"
+    "primary-color": "#2F54EB",
+    "@primary-color": '#2f54eb'
   },
 });

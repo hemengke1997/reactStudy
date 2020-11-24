@@ -6,6 +6,7 @@
     display: flex;
     height: calc(~"100% - 64px");
     width: 100%;
+
     .leftArea {
       width: 350px;
       height: 100%;
@@ -15,9 +16,48 @@
       transition: width ease-in-out 0.5s;
       position: fixed;
       z-index: 200;
+
       &.collapsed {
-        width: 50px;
+        width: 50px !important;
+      }
+
+      .componentList {
+        height: 100%;
+      }
+
+      .collapsedIcon {
+        position: absolute;
+        left: 18px;
+        bottom: 132px;
+        cursor: pointer;
+
+        &:hover {
+          color: @primary-color;
+        }
+      }
+
+      .ctitle {
+        white-space: nowrap;
+        color: @primary-color;
+        font-size: 18px;
+        font-weight: 700;
+        padding: 12px 0;
+        display: block;
       }
     }
+  }
+}
+
+
+.editorTabclass {
+  height: 100%;
+  .ant-tabs-nav {
+    width: 40px !important;
+    min-width: 40px !important;
+  }
+
+  .ant-tabs-tab {
+    padding: 20px 0px !important;
+    margin: auto !important;
   }
 }

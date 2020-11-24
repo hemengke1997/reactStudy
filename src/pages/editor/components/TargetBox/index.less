@@ -1,0 +1,32 @@
+.targetBox {
+  flex: 1;
+
+  &:nth-child(odd) {
+    margin-left: 8px;
+  }
+
+  .module {
+    user-select: none;
+    border: 2px solid #9e9e9e3d;
+    transition: border 0.3s;
+    margin-bottom: 10px;
+    position: relative;
+  }
+
+  .moduleGraph {
+    height: 110px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .moduleName {
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    background-color: rgba(245, 245, 245, 1);
+    color: rgba(118, 118, 118, 1);
+  }
+}
