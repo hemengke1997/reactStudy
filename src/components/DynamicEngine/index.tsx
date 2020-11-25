@@ -1,7 +1,7 @@
 /*
  * @Author: hemengke
  * @Date: 2020-11-24 09:02:30
- * @LastEditTime: 2020-11-24 16:09:49
+ * @LastEditTime: 2020-11-25 17:06:42
  * @LastEditors: hemengke
  * @Description: 按需加载的组件 
  */
@@ -51,7 +51,9 @@ const DynamicFc = (type: string, componentsType: componentsType, context: doorin
     loading: () => (
       <div>
         <Loading />
-        <span>按需加载组件loading...</span>
+        <span style={{
+          whiteSpace: 'nowrap'
+        }}>按需加载组件loading...</span>
       </div>
     )
   })

@@ -1,7 +1,10 @@
 import React, { memo } from 'react'
+import { Button } from 'antd'
+import { IButtonConfig } from './schema'
 
-const Button = memo((props)=>{
+const button = memo((props: IButtonConfig) => {
+  const { type, text } = props
   return (
-    
+    <Button type={type}>{text}</Button>
   )
 })

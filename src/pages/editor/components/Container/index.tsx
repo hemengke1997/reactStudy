@@ -1,10 +1,12 @@
-import React, { useMemo, useState, Fragment } from 'react'
+import React, { useMemo, useState, Fragment, useContext } from 'react'
 import DynamicEngine, { componentsType } from '@/components/DynamicEngine/index'
 import TargetBox from '../TargetBox/index'
 import {
   Tabs
 } from 'antd'
 import classnames from 'classnames'
+import template1 from '@/components/BasicPcShop/BasicComponents/template'
+import { dooringContext } from '@/layout';
 
 import {
   PieChartOutlined,
@@ -20,8 +22,10 @@ import './index.less'
 
 const { TabPane } = Tabs
 
-const ContainerComponent = () => {
+const ContainerComponent = (props) => {
 
+
+  const context = useContext(dooringContext)
 
   const [collapsed, setCollapsed] = useState(false)
 
@@ -36,6 +40,12 @@ const ContainerComponent = () => {
       setCollapsed(collapsed)
     }
   }, [])
+
+  const template = useMemo(() => {
+    if (context.theme === 'h5') {
+      return template1
+    }
+  }, [context.theme])
 
 
   const generateHeader = useMemo(() => {
@@ -59,12 +69,18 @@ const ContainerComponent = () => {
       )
     } else {
       return (
-        <Fragment>
+        <>
           <TabPane tab={generateHeader('base')} key='1'>
             <span className={styles.ctitle}>基础组件</span>
-            <TargetBox item={{ displayName: 'test' }}>
-              <DynamicEngine item={{ displayName: 'test' }} config={{}} componentsType='base' isTpl={true}></DynamicEngine>
-            </TargetBox>
+            {
+              template.map((val, i) => {
+                return (
+                  <TargetBox item={val} key={i}>
+                    <DynamicEngine {...val} config={{}} componentsType='base' isTpl={true} />
+                  </TargetBox>
+                )
+              })
+            }
           </TabPane>
           <TabPane tab={generateHeader('media')} key='2'>
             <span className={styles.ctitle}>视频组件</span>
@@ -73,7 +89,7 @@ const ContainerComponent = () => {
           <TabPane tab={generateHeader('visible')} key='3'>
             <span className={styles.ctitle}>可视化组件</span>
           </TabPane>
-        </Fragment>
+        </>
       )
     }
   }, [])
