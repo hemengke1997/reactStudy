@@ -1,7 +1,7 @@
 /*
  * @Author: hemengke
- * @Date: 2020-11-25 17:23:39
- * @LastEditTime: 2020-11-30 11:17:27
+ * @Date: 2020-11-30 11:35:54
+ * @LastEditTime: 2020-11-30 14:21:46
  * @LastEditors: hemengke
  * @Description: 暂无描述
  */
@@ -20,25 +20,23 @@ import {
 
 import { ICommonBaseType, baseSchema, baseDefault } from '../../common'
 
-export type THeaderEditData = Array<
-  IColorConfigType | INumberConfigType | IUploadConfigType | ITextConfigType
->
+export type TFooterEditData = Array<IColorConfigType | INumberConfigType | IUploadConfigType | ITextConfigType>
 
-export interface IHeaderConfig extends ICommonBaseType {
-  bgColor: TColorDefaultType; // string
+export interface IFooterConfig extends ICommonBaseType {
+  bgColor: TColorDefaultType;
   logo: TUploadDefaultType;
   logoText: TTextDefaultType;
   fontSize: TNumberDefaultType;
   color: TColorDefaultType;
-  height: TNumberDefaultType;
+  height: TNumberDefaultType
 }
 
-export interface IHeaderSchema {
-  editData: THeaderEditData;
-  config: IHeaderConfig
+export interface IFooterSchema {
+  editData: TFooterEditData;
+  config: IFooterConfig
 }
 
-const Header: IHeaderSchema = {
+const Footer: IFooterSchema = {
   editData: [
     ...baseSchema,
     {
@@ -49,43 +47,32 @@ const Header: IHeaderSchema = {
     {
       key: 'logo',
       name: 'logo图标',
-      type: 'Upload',
-      isCrop: true,
-      cropRate: 1000 / 618
+      type: 'Upload'
     },
     {
       key: 'logoText',
-      name: 'logo文字'
+      name: 'logo文本',
+      type: 'Text'
     },
     {
       key: 'fontSize',
-      name: '字体大小'
+      name: '字体大小',
+      type: 'Number'
     },
     {
       key: 'color',
-      name: '颜色'
+      name: '文本颜色',
+      type: 'Color'
     },
     {
       key: 'height',
-      name: '高度'
+      name: '高度',
+      type: 'Number'
     }
   ],
   config: {
     ...baseDefault,
-    bgColor: '#000',
-    logo: [{
-      uid: '001',
-      name: 'image.png',
-      status: 'done',
-      url: require('../../../../../public/favicon.svg'),
-    }],
-    logoText: '页头 Header',
-    fontSize: 20,
-    color: 'red',
-    height: 50
   }
 }
 
-export default Header
-
-
+export default Footer

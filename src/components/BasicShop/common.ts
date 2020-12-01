@@ -1,7 +1,7 @@
 /*
  * @Author: hemengke
  * @Date: 2020-11-25 17:26:14
- * @LastEditTime: 2020-11-25 17:49:19
+ * @LastEditTime: 2020-11-30 09:23:47
  * @LastEditors: hemengke
  * @Description: 暂无描述
  */
@@ -18,7 +18,6 @@ export interface ICommonBaseType {
   baseScale: TNumberDefaultType,
   baseWidth: TNumberDefaultType,
   baseHeight: TNumberDefaultType,
-  isTpl?: Boolean
 }
 
 

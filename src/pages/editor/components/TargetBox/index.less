@@ -1,8 +1,8 @@
 .targetBox {
-  flex: 1;
+  width: 49%;
 
-  &:nth-child(odd) {
-    margin-left: 8px;
+  &:nth-of-type(2n) {
+    margin-left: 2%;
   }
 
   .module {
@@ -28,5 +28,7 @@
     text-align: center;
     background-color: rgba(245, 245, 245, 1);
     color: rgba(118, 118, 118, 1);
+    white-space: nowrap;
+    overflow: hidden;
   }
 }

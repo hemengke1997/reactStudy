@@ -1,7 +1,7 @@
 /*
  * @Author: hemengke
  * @Date: 2020-11-24 09:02:30
- * @LastEditTime: 2020-11-25 17:06:42
+ * @LastEditTime: 2020-11-30 12:00:26
  * @LastEditors: hemengke
  * @Description: 按需加载的组件 
  */
@@ -24,29 +24,25 @@ import { dooringContext, dooringContextType } from '@/layout'
 //  | 联合类型  只有联合类型存在的情况下，才需要类型保护。
 export type componentsType = 'media' | 'base' | 'visible';
 
-const DynamicFc = (type: string, componentsType: componentsType, context: dooringContextType) => {
+const DynamicFc = (type: string, componentsType: componentsType, contextTheme: dooringContextType) => {
   return dynamic({
     loader: async function () {
       let Components: FC
-      console.log(type,'type')
-      console.log(componentsType,'componentsType')
-      console.log(context,'context')
-      const prefix = context === 'pc' ? 'Pc' : ''
+      const prefix = contextTheme === 'pc' ? 'Pc' : ''
       if (componentsType === 'base') {
-        const { default: Graph } = await import(`@/components/Basic${prefix}/BasicComponents/${type}`)
-        console.log(Graph, 'Graph')
+        const { default: Graph } = await import(`@/components/Basic${prefix}Shop/BasicComponents/${type}`)
+        Components = Graph
       } else if (componentsType === 'media') {
-        const { default: Graph } = await import(`@/components/Basic${prefix}/MediaComponents/${type}`)
-
+        const { default: Graph } = await import(`@/components/Basic${prefix}Shop/MediaComponents/${type}`)
+        Components = Graph
       } else {
-        const { default: Graph } = await import(`@/components/Basic${prefix}/VisibleComponents/${type}`)
+        const { default: Graph } = await import(`@/components/Basic${prefix}Shop/VisibleComponents/${type}`)
+        Components = Graph
       }
-      Components = Graph
       return (props: DynamicType) => {
         const { config, isTpl } = props
         return <Components {...config} isTpl={isTpl}></Components>
       }
-
     },
     loading: () => (
       <div>
@@ -60,23 +56,21 @@ const DynamicFc = (type: string, componentsType: componentsType, context: doorin
 }
 
 type DynamicType = {
-  isTpl: boolean,
   config: { [key: string]: any },
   type: string,
   componentsType: componentsType,
-  category: string
+  category: string,
+  isTpl: boolean
 }
 
-const DynamicEngine = memo((props: DynamicType) => {
-  const { config, type, componentsType } = props
-  console.log(props,'props')
+const DynamicEngine = (props: DynamicType) => {
+  const { type, config, componentsType } = props
   const context = useContext(dooringContext)
   const Dynamic = useMemo(() => {
-    return DynamicFc(type, componentsType, context.theme)
+    return DynamicFc(type, componentsType, context)
   }, [config, context.theme])
+
   return <Dynamic {...props}></Dynamic>
+}
 
-  // return DynamicFc(type, componentsType, context.theme)
-})
-
-export default DynamicEngine
+export default React.memo(DynamicEngine)

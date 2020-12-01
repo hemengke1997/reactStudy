@@ -1,12 +1,12 @@
-import React, { useMemo, useState, Fragment, useContext } from 'react'
+import React, { useMemo, useState, Fragment, useContext, useEffect, useCallback } from 'react'
 import DynamicEngine, { componentsType } from '@/components/DynamicEngine/index'
 import TargetBox from '../TargetBox/index'
 import {
   Tabs
 } from 'antd'
 import classnames from 'classnames'
-import template1 from '@/components/BasicPcShop/BasicComponents/template'
 import { dooringContext } from '@/layout';
+
 
 import {
   PieChartOutlined,
@@ -20,11 +20,26 @@ import HeaderComponent from '../Header/index'
 import styles from './index.less'
 import './index.less'
 
+import templateH5 from '@/components/BasicShop/BasicComponents/template'
+import schemaH5 from '@/components/BasicShop/schema'
+import Calibration from '@/components/Calibration/index'
+import SourceBox from '../SourceBox/index'
+
 const { TabPane } = Tabs
 
-const ContainerComponent = (props) => {
+const ContainerComponent = (props: {
+  history?: any;
+  location?: any;
+  pstate?: any;
+  cstate?: any;
+  dispatch?: any;
+}) => {
 
+  const [scaleNum, setScale] = useState(1);
 
+  useEffect(() => {
+    console.log(schemaH5, '___')
+  })
   const context = useContext(dooringContext)
 
   const [collapsed, setCollapsed] = useState(false)
@@ -43,20 +58,28 @@ const ContainerComponent = (props) => {
 
   const template = useMemo(() => {
     if (context.theme === 'h5') {
-      return template1
+      return templateH5
     }
   }, [context.theme])
 
 
-  const generateHeader = useMemo(() => {
-    return (type: componentsType, text: string = '') => {
-      return (
-        <div>
-          {CpIcon[type]} {text}
-        </div>
-      )
-    }
-  }, [CpIcon])  // ？
+  // const generateHeader = useMemo(() => {
+  //   return (type: componentsType, text: string = '') => {
+  //     return (
+  //       <div>
+  //         {CpIcon[type]} {text}
+  //       </div>
+  //     )
+  //   }
+  // }, [CpIcon])
+
+  const generateHeader = useCallback((type: componentsType, text: string = '') => {
+    return (
+      <div>
+        {CpIcon[type]} {text}
+      </div>
+    )
+  }, [CpIcon])
 
   const tabsRender = useMemo(() => {
     if (collapsed) {
@@ -72,15 +95,17 @@ const ContainerComponent = (props) => {
         <>
           <TabPane tab={generateHeader('base')} key='1'>
             <span className={styles.ctitle}>基础组件</span>
-            {
-              template.map((val, i) => {
+
+            <div className={styles.flexBox}>
+              {template.map((val, i) => {
                 return (
                   <TargetBox item={val} key={i}>
-                    <DynamicEngine {...val} config={{}} componentsType='base' isTpl={true} />
+                    <DynamicEngine {...val} config={schemaH5[val.type].config} isTpl={true} componentsType='base' />
                   </TargetBox>
                 )
-              })
-            }
+              })}
+            </div>
+
           </TabPane>
           <TabPane tab={generateHeader('media')} key='2'>
             <span className={styles.ctitle}>视频组件</span>
@@ -113,7 +138,16 @@ const ContainerComponent = (props) => {
           </div>
         </div>
         {/* 右侧 */}
-        <div className={styles.rightArea}></div>
+
+        <div className={styles.tickMark}>
+          <div className={styles.tickMarkTop}>
+            <Calibration direction='up' id="calibrationUp" multiple={scaleNum} />
+          </div>
+          <div className={styles.tickMarkLeft}>
+            <Calibration direction='right' id="calibrationRight" multiple={scaleNum} />
+          </div>
+          <SourceBox />
+        </div>
       </div>
     </div>
   )
