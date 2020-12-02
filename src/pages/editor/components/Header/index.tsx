@@ -1,13 +1,12 @@
 /*
  * @Author: hemengke
  * @Date: 2020-11-23 15:27:09
- * @LastEditTime: 2020-11-23 16:15:38
+ * @LastEditTime: 2020-12-02 17:13:01
  * @LastEditors: hemengke
  * @Description: 头部
  */
 
-
-import React from 'react'
+import React from 'react';
 import {
   ArrowLeftOutlined,
   MobileOutlined,
@@ -22,23 +21,21 @@ import {
   UploadOutlined,
   InstagramOutlined,
 } from '@ant-design/icons';
-import { Button, Upload, Tooltip, Popover } from 'antd'
+import { Button, Upload, Tooltip, Popover } from 'antd';
 
-import styles from './index.less'
+import styles from './index.less';
 
-interface IHeaderComponentProps {
-
-}
+interface IHeaderComponentProps {}
 
 const HeaderComponent = (props: IHeaderComponentProps) => {
   return (
     <div className={styles.header}>
       <div className={styles.logoArea}>
         <ArrowLeftOutlined className={styles.backArrow} />
-        <div className={styles.logo}></div>
+        {/* <div className={styles.logo}></div> */}
       </div>
       <div className={styles.functionArea}>
-        <Button type="primary">模板库</Button>
+        {/* <Button type="primary">模板库</Button> */}
         <Button type="link">保存模板</Button>
 
         <Tooltip title="上传模板">
@@ -50,7 +47,7 @@ const HeaderComponent = (props: IHeaderComponentProps) => {
         </Tooltip>
 
         <Tooltip title="下载json文件">
-          <Button type="link" >
+          <Button type="link">
             <DownloadOutlined />
           </Button>
         </Tooltip>
@@ -95,20 +92,19 @@ const HeaderComponent = (props: IHeaderComponentProps) => {
 
         <Button type="link">预览</Button>
 
-        <Button type="link">帮助</Button>
+        {/* <Button type="link">帮助</Button> */}
       </div>
       <div className={styles.btnAreas}>
-        <Button type="primary" className={styles.codeBtn}>
+        {/* <Button type="primary" className={styles.codeBtn}>
           <CodeOutlined />在线编程
         </Button>
 
         <Button type="primary">
           <SketchOutlined />会员登录
-        </Button>
+        </Button> */}
       </div>
-
     </div>
-  )
-}
+  );
+};
 
-export default React.memo(HeaderComponent)
+export default React.memo(HeaderComponent);
