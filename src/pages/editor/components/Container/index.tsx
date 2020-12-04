@@ -110,7 +110,6 @@ const ContainerComponent = (props: {
                       {...val}
                       config={schemaH5[val.type].config}
                       isTpl={true}
-                      componentsType="base"
                     />
                   </TargetBox>
                 );

@@ -1,7 +1,7 @@
 /*
  * @Author: hemengke
  * @Date: 2020-11-23 09:48:46
- * @LastEditTime: 2020-12-02 13:53:15
+ * @LastEditTime: 2020-12-04 09:43:51
  * @LastEditors: hemengke
  * @Description: 暂无描述
  */
@@ -18,7 +18,7 @@ export default defineConfig({
   // 在umirc文件中通过key来配置插件
   antd: {},
   dva: {
-    immer: true,
+    immer: false,
   },
   routes: [
     {

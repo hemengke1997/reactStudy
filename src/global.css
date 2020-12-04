@@ -4,3 +4,11 @@
   height: 100%;
 }
 
+/* 
+Include the following stylesheets in your application:
+/node_modules/react-grid-layout/css/styles.css
+/node_modules/react-resizable/css/styles.css
+ */
+
+@import '~react-grid-layout/css/styles.css';
+@import '~react-resizable/css/styles.css';

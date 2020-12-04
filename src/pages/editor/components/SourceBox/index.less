@@ -16,6 +16,23 @@
     &.highlight {
       animation: highlight-animation 1s ease-in-out infinite alternate;
     }
+
+    .dragItem {
+      display: inline-block;
+      position: absolute;
+      z-index: 2;
+      border: 2px solid transparent;
+      cursor: move;
+      transition: border ease 0.2s;
+
+      &:hover {
+        border: 2px solid #06c;
+      }
+
+      &.active {
+        border: 2px solid #06c;
+      }
+    }
   }
 
   @keyframes highlight-animation {
