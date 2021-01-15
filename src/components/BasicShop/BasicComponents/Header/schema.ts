@@ -1,12 +1,3 @@
-/*
- * @Author: hemengke
- * @Date: 2020-11-25 17:23:39
- * @LastEditTime: 2020-11-30 11:17:27
- * @LastEditors: hemengke
- * @Description: 暂无描述
- */
-
-
 import {
   IColorConfigType,
   INumberConfigType,
@@ -16,16 +7,14 @@ import {
   TNumberDefaultType,
   TTextDefaultType,
   TUploadDefaultType,
-} from '@/components/PanelComponents/FormEditor/types'
-
-import { ICommonBaseType, baseSchema, baseDefault } from '../../common'
+} from '@/core/FormComponents/types';
+import { baseConfig, baseDefault, ICommonBaseType } from '../../common';
 
 export type THeaderEditData = Array<
   IColorConfigType | INumberConfigType | IUploadConfigType | ITextConfigType
->
-
+>;
 export interface IHeaderConfig extends ICommonBaseType {
-  bgColor: TColorDefaultType; // string
+  bgColor: TColorDefaultType;
   logo: TUploadDefaultType;
   logoText: TTextDefaultType;
   fontSize: TNumberDefaultType;
@@ -35,57 +24,61 @@ export interface IHeaderConfig extends ICommonBaseType {
 
 export interface IHeaderSchema {
   editData: THeaderEditData;
-  config: IHeaderConfig
+  config: IHeaderConfig;
 }
 
 const Header: IHeaderSchema = {
   editData: [
-    ...baseSchema,
+    ...baseConfig,
     {
       key: 'bgColor',
       name: '背景色',
-      type: 'Color'
-    },
-    {
-      key: 'logo',
-      name: 'logo图标',
-      type: 'Upload',
-      isCrop: true,
-      cropRate: 1000 / 618
-    },
-    {
-      key: 'logoText',
-      name: 'logo文字'
-    },
-    {
-      key: 'fontSize',
-      name: '字体大小'
-    },
-    {
-      key: 'color',
-      name: '颜色'
+      type: 'Color',
     },
     {
       key: 'height',
-      name: '高度'
-    }
+      name: '高度',
+      type: 'Number',
+    },
+    {
+      key: 'logo',
+      name: 'logo',
+      type: 'Upload',
+      isCrop: true,
+      cropRate: 1000 / 618,
+    },
+    {
+      key: 'logoText',
+      name: 'logo文字',
+      type: 'Text',
+    },
+    {
+      key: 'color',
+      name: '文字颜色',
+      type: 'Color',
+    },
+    {
+      key: 'fontSize',
+      name: '文字大小',
+      type: 'Number',
+    },
   ],
   config: {
-    ...baseDefault,
-    bgColor: '#000',
-    logo: [{
-      uid: '001',
-      name: 'image.png',
-      status: 'done',
-      url: require('../../../../../public/favicon.svg'),
-    }],
-    logoText: '页头 Header',
+    bgColor: 'rgba(0,0,0,1)',
+    logo: [
+      {
+        uid: '001',
+        name: 'image.png',
+        status: 'done',
+        url: 'http://49.234.61.19/uploads/3_1740be8a482.png',
+      },
+    ],
+    logoText: '页头Header',
     fontSize: 20,
-    color: 'red',
-    height: 50
-  }
-}
+    color: 'rgba(255,255,255,1)',
+    height: 50,
+    ...baseDefault,
+  },
+};
 
-export default Header
-
-
+export default Header;

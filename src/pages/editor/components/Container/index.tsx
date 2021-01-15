@@ -7,9 +7,7 @@ import React, {
   useCallback,
   useRef,
 } from 'react';
-import DynamicEngine, {
-  componentsType,
-} from '@/components/DynamicEngine/index';
+import DynamicEngine, { componentsType } from '@/core/DynamicEngine';
 import TargetBox from '../TargetBox/index';
 import { Tabs } from 'antd';
 import classnames from 'classnames';
@@ -63,6 +61,7 @@ const ContainerComponent = (props: {
     if (context.theme === 'h5') {
       return templateH5;
     }
+    return [];
   }, [context.theme]);
 
   // 指定画布的id
@@ -105,11 +104,14 @@ const ContainerComponent = (props: {
             <div className={styles.flexBox}>
               {template.map((val, i) => {
                 return (
-                  <TargetBox item={val} key={i}>
+                  <TargetBox canvasId={canvasId} item={val} key={i}>
                     <DynamicEngine
                       {...val}
-                      config={schemaH5[val.type].config}
+                      config={
+                        schemaH5[val.type as keyof typeof schemaH5].config
+                      }
                       isTpl={true}
+                      componentsType="base"
                     />
                   </TargetBox>
                 );
@@ -208,7 +210,7 @@ const ContainerComponent = (props: {
     if (diffmove.move && tickRef.current) {
       tickRef.current.style.cursor = 'move';
     } else {
-      tickRef.current.style.cursor = 'default';
+      tickRef.current!.style.cursor = 'default';
     }
   }, [diffmove.move]);
 

@@ -1,0 +1,44 @@
+.imageViewer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  z-index: 1000;
+}
+
+.imageBox {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  line-height: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  overflow: auto;
+}
+
+.image {
+  position: absolute;
+  transition: all 2s;
+  cursor: zoom-out;
+  transform-origin: center;
+}
+
+.image-enter {
+  opacity: 0;
+}
+
+.image-enter-active {
+  transition: opacity 0.2s;
+  opacity: 1;
+}
+
+.image-exit {
+  opacity: 1;
+}
+
+.image-exit-active {
+  transition: opacity 0.2s;
+  opacity: 0;
+}

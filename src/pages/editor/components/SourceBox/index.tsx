@@ -33,7 +33,7 @@ import {
 import { createPortal } from 'react-dom';
 import { uuid } from '@/utils/tool';
 import { IPointData } from '../../models/editorModel';
-import DynamicEngine from '@/components/DynamicEngine';
+import DynamicEngine from '@/core/DynamicEngine';
 
 /*
 关于GridLayout参数的介绍
@@ -47,7 +47,7 @@ export interface SoureBoxProps {
     pointData: IPointData[];
     curPoint: any;
   };
-  cstate: { pointData: IPointData[]; curPoint: any };
+  // cstate: { pointData: IPointData[]; curPoint: any };
   scaleNum: number;
   canvasId: string;
   allType: string[];
@@ -63,7 +63,6 @@ const MENU_ID = '😍';
 const SourceBox = memo((props: SoureBoxProps) => {
   const {
     pstate,
-    cstate,
     scaleNum,
     canvasId,
     allType,
@@ -165,8 +164,8 @@ const SourceBox = memo((props: SoureBoxProps) => {
     accept: allType,
     drop: (item: { h: number; type: string; x?: number }, monitor) => {
       let parentDiv = document.querySelector(`#${canvasId}`);
-      let pointRect = parentDiv.getBoundingClientRect();
-      let top = pointRect.top;
+      let pointRect = parentDiv?.getBoundingClientRect();
+      let top = pointRect?.top;
       // drop结束时鼠标的坐标
       let pointEnd = monitor.getSourceClientOffset();
       let y = pointEnd.y < top ? 0 : pointEnd.y - top;

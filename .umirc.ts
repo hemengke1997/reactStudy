@@ -38,6 +38,10 @@ export default defineConfig({
           path: '/ide',
           component: '@/pages/ide/index',
         },
+        {
+          path: '/test',
+          component: '@/pages/test/index',
+        },
       ],
     },
   ],
