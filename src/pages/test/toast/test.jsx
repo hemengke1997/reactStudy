@@ -3,6 +3,7 @@ import React, {
   useEffect,
   useReducer,
   useState,
+  useRef,
   useMemo,
 } from 'react';
 import ReactDOM from 'react-dom';
@@ -11,12 +12,14 @@ import { TransitionMotion, spring, presets } from 'react-motion';
 import UUID from 'uuidjs';
 
 const TRANSLATEY = 120;
-const Toast = React.memo(props => {
-  const { visible, stayTime, content, setHide, sortKey } = props;
+const Toast = props => {
+  const { visible, stayTime, content } = props;
   const [visibleState, setVisibleState] = useState(false);
   const [height, setHeight] = useState(0);
-  const [unmount, setUnmount] = useState(false);
-  let timer = null;
+
+  useEffect(() => {
+    console.log('props');
+  }, [props]);
 
   const getStyles = useCallback(() => {
     if (visibleState) {
@@ -41,44 +44,26 @@ const Toast = React.memo(props => {
     }
   };
 
-  const hideAndRemove = () => {
-    console.log(1);
-    hide();
-    debugger;
-    console.log(2);
-  };
-
   const hide = () => {
     setVisibleState(false);
-    clearTimeout(timer);
   };
 
   const autoClose = () => {
     if (stayTime > 0) {
-      timer = setTimeout(() => {
+      let timer = setTimeout(() => {
         hide();
+        clearTimeout(timer);
       }, stayTime);
     }
   };
 
   const didLeave = styleThatLeft => {
     afterClose();
-    setUnmount(true);
+    ToastQueue.dispatchToastList({ type: 'remove' });
   };
 
   useEffect(() => {
-    if (unmount === true) {
-      setTimeout(() => {
-        ToastQueue.dispatchToastList({ type: 'remove' });
-      });
-    }
-  }, [unmount]);
-
-  useEffect(() => {
-    setHide({ hideAndRemove, sortKey });
-    return () => {
-      console.log('toast => unmount');
-    };
+    Toast.hideHelper = hide;
   }, []);
 
   useEffect(() => {
@@ -144,71 +129,33 @@ const Toast = React.memo(props => {
       }
     </TransitionMotion>
   );
-});
+};
 
 Toast.defaultProps = {
   visible: false,
   stayTime: 3000,
-  maxCount: 2,
+  maxCount: 6,
 };
 
 const ToastQueue = props => {
   const { maxCount } = props;
-  const reducer = (store, action) => {
-    const t = [...store];
+  const reducer = useCallback((store, action) => {
     switch (action.type) {
       case 'add':
-        if (t.length >= maxCount) {
-          // 父组件调用子组件的hide方法，并且在返回值中设置一个hasHide
-          console.log(t[0]);
-          t[0].hide();
+        if (store.length >= maxCount) {
+          // 让最前面的那个toast消失
         }
-        return [...t, { ...action.data, sortKey: UUID.generate() }];
+        return [...store, { ...action.data, key: UUID.generate() }];
       case 'remove':
+        const t = [...store];
         t.shift();
         return t;
-      case 'setHideMethod':
-        const {
-          data: { sortKey, hide },
-        } = action;
-        const index = t.findIndex(item => {
-          return item.sortKey === sortKey;
-        });
-        if (index !== -1) {
-          t[index] = { ...t[index], hide: hide };
-        }
-        return t;
-      case 'hide':
-        const { data } = action;
-        const returnVal = t.map(item => {
-          if (data === item.sortKey) {
-            return {
-              ...item,
-              hasHide: true,
-            };
-          }
-          return { ...item };
-        });
-        console.log('x');
-        return returnVal;
       default:
         throw new Error('xxxx');
     }
-  };
+  }, []);
 
   const [toastList, dispatchToastList] = useReducer(reducer, []);
-
-  useEffect(() => {
-    console.log(toastList);
-  }, [toastList]);
-
-  const setHide = data => {
-    const { hideAndRemove, sortKey } = data;
-    dispatchToastList({
-      type: 'setHideMethod',
-      data: { sortKey: sortKey, hide: hideAndRemove },
-    });
-  };
 
   useEffect(() => {
     dispatchToastList({ type: 'add', data: props });
@@ -218,14 +165,15 @@ const ToastQueue = props => {
     ToastQueue.dispatchToastList = dispatchToastList;
   }, []);
 
+  const ToastList = useMemo(() => {
+    if (!toastList.length) return null;
+    console.log(toastList, 'toastList');
+    return toastList.map(toast => <Toast key={toast.key} {...toast}></Toast>);
+  }, [toastList.length]);
+
   return (
     <>
-      <div className={styles.toastWrapper}>
-        {toastList.length > 0 &&
-          toastList.map(toast => (
-            <Toast key={toast.sortKey} {...toast} setHide={setHide}></Toast>
-          ))}
-      </div>
+      <div className={styles.toastWrapper}>{ToastList}</div>
     </>
   );
 };
@@ -263,7 +211,12 @@ Toast.show = function(content) {
   }
 };
 
-Toast.hideAll = function() {};
+Toast.hide = function() {
+  return;
+  if (Toast._instance) {
+    Toast.hideHelper();
+  }
+};
 
 Toast.unmountNode = function() {
   const { _instance } = ToastQueue;
