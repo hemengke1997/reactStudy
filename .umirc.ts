@@ -1,7 +1,7 @@
 /*
  * @Author: hemengke
  * @Date: 2020-11-23 09:48:46
- * @LastEditTime: 2020-12-04 09:43:51
+ * @LastEditTime: 2021-01-21 10:59:14
  * @LastEditors: hemengke
  * @Description: 暂无描述
  */
@@ -41,6 +41,14 @@ export default defineConfig({
         {
           path: '/test',
           component: '@/pages/test/index',
+        },
+        {
+          path: '/test1',
+          component: '@/pages/test/reactMotion',
+        },
+        {
+          path: '/spring',
+          component: '@/pages/spring/index',
         },
       ],
     },

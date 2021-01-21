@@ -42,6 +42,9 @@ const MotionBox = () => {
       <Motion
         defaultStyle={{ x: 0 }}
         style={{ x: spring(left, presets.gentle) }}
+        onRest={() => {
+          console.log('rest');
+        }}
       >
         {interpolatingStyle => (
           <div
